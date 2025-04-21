@@ -1,6 +1,6 @@
 public class MyHashTable<K, V> {
-    private class HashNode<K, V> {
-        private K key;
+    private static class HashNode<K, V> {
+        private final K key;
         private V value;
         private HashNode<K, V> next;
 
@@ -11,11 +11,11 @@ public class MyHashTable<K, V> {
 
         @Override
         public String toString() {
-            return "" + key + " " + value + "}";
+            return "{" + key + " " + value + "}";
         }
     }
 
-    private HashNode<K, V>[] chainArray; // or Object[]
+    private final HashNode<K, V>[] chainArray; // or Object[]
     private int M = 11; // default number of chains
     private int size;
 
