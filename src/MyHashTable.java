@@ -1,6 +1,6 @@
 public class MyHashTable<K, V> {
     private static class HashNode<K, V> {
-        private final K key;
+        private K key;
         private V value;
         private HashNode<K, V> next;
 
@@ -15,7 +15,7 @@ public class MyHashTable<K, V> {
         }
     }
 
-    private final HashNode<K, V>[] chainArray; // or Object[]
+    private final HashNode<K, V>[] chainArray;
     private int M = 11; // default number of chains
     private int size;
 
@@ -116,5 +116,24 @@ public class MyHashTable<K, V> {
             }
         }
         return null;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    // helper method to get bucket sizes for testing
+    public int[] getBucketSizes() {
+        int[] bucketSizes = new int[M];
+        for (int i = 0; i < M; i++) {
+            int count = 0;
+            HashNode<K, V> current = chainArray[i];
+            while (current != null) {
+                count++;
+                current = current.next;
+            }
+            bucketSizes[i] = count;
+        }
+        return bucketSizes;
     }
 }

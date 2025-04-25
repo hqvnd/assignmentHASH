@@ -1,9 +1,8 @@
-import java.util.Objects;
 
-// Custom class for testing
+// custom class
 class MyTestingClass {
-    private final int id;
-    private final String name;
+    private int id;
+    private String name;
 
     public MyTestingClass(int id, String name) {
         this.id = id;
@@ -34,7 +33,7 @@ class MyTestingClass {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         MyTestingClass that = (MyTestingClass) obj;
-        return id == that.id && (Objects.equals(name, that.name));
+        return id == that.id && (name == null ? that.name == null : name.equals(that.name));
     }
 
     @Override
@@ -45,8 +44,8 @@ class MyTestingClass {
 
 // Student class for values
 class Student {
-    private final String name;
-    private final double gpa;
+    private String name;
+    private double gpa;
 
     public Student(String name, double gpa) {
         this.name = name;
@@ -59,22 +58,26 @@ class Student {
     }
 }
 
-// Testing class
+// test
 public class MyHashTableTest {
     public static void main(String[] args) {
-        // Create hash table
         MyHashTable<MyTestingClass, Student> table = new MyHashTable<>();
 
-        // Add 10000 random elements
+        // Add random elements
         for (int i = 0; i < 10000; i++) {
-            int randomId = (int) (Math.random() * 1000000); //
+            int randomId = (int) (Math.random() * 1000000);
             String randomName = "Name" + randomId;
             MyTestingClass key = new MyTestingClass(randomId, randomName);
             Student value = new Student("Student" + i, Math.random() * 4.0);
             table.put(key, value);
         }
 
-        // the poor distribution for the compatibility of test class, uncomment the code below
-        // and run again to see the improvement.
+        // number of elements in each bucket
+        int[] bucketSizes = table.getBucketSizes();
+        for (int i = 0; i < bucketSizes.length; i++) {
+            System.out.println("Bucket " + i + ": " + bucketSizes[i] + " elements");
+        }
+
+        System.out.println("Total elements: " + table.getSize());
     }
 }
